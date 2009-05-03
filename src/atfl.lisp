@@ -118,10 +118,16 @@
       (setf *stack* nil)
       (setf *env* (rplaca new-env args)))))
 
+(defun op-PRINT ()
+  (format t "~a" (pop *stack*)))
+
+(defun op-PRINTLN ()
+  (format t "~a~%" (pop *stack*)))
+
 ;; define our LispKit compiler and helpers
 
 (defun location (x n)
-  (if (member x (car n))
+  (if (find x (car n))
       (cons 0 (position x (car n)))
       (let ((z (location x (cdr n))))
         (cons (+ (car z) 1) (cdr z)))))
