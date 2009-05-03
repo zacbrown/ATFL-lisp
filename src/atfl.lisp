@@ -149,6 +149,9 @@
 
 (defun comp (expr env code)
   (cond
+    ((integerp expr) (cons 'LDC (cons expr code)))
+    ((floatp expr) (cons 'LDC (cons expr code)))
+    ((stringp expr) (cons 'LDC (cons expr code)))
     ((atom expr) (cons 'LD (cons (location expr env) code)))
     ((eql (car expr) 'quote) (cons 'LDC (cons (cadr expr) code)))
     ((eql (car expr) 'add)
